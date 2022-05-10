@@ -27,7 +27,7 @@ const errorExchange: Exchange =
   };
 
 export const createUrqlClient = (ssrExchange: any) => ({
-  url: "https://thirdjobserver.vercel.app/graphql",
+  url: "https://thirdjobserver.vercel.app/api/graphql",
   fetchOptions: {
     credentials: "include" as const,
   },
