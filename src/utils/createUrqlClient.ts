@@ -27,7 +27,7 @@ const errorExchange: Exchange =
   };
 
 export const createUrqlClient = (ssrExchange: any) => ({
-  url: "https://thirdjobserver.herokuapp.com/api/graphql",
+  url: "https://thirdjobserver.herokuapp.com/graphql",
   fetchOptions: {
     credentials: "include" as const,
   },
