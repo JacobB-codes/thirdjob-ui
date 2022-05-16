@@ -16,7 +16,6 @@ const client = new ApolloClient({
               existing: PaginatedJobs | undefined,
               incoming: PaginatedJobs
             ): PaginatedJobs {
-              console.log(existing, incoming);
               return {
                 ...incoming,
                 jobs: [...(existing?.jobs || []), ...incoming.jobs],

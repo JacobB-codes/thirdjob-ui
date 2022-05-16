@@ -52,7 +52,6 @@ const Index = () => {
         <Flex>
           <Button
             onClick={() => {
-              console.log(data);
               fetchMore({
                 variables: {
                   limit: variables?.limit,
