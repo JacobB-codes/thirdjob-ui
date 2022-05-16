@@ -5,7 +5,6 @@ import { NextPageContext } from "next";
 import { isServer } from "./isServer";
 
 const createApolloClient = (ctx?: NextPageContext) => {
-  console.log(ctx?.req?.headers);
   return new ApolloClient({
     uri: `${process.env.NEXT_PUBLIC_SERVER_URL}/graphql` as string,
     credentials: "include",
