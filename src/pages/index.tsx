@@ -1,5 +1,3 @@
-import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlClient";
 import { useJobsQuery } from "../generated/graphql";
 import Layout from "../components/Layout";
 import {
@@ -14,14 +12,20 @@ import {
 import NextLink from "next/link";
 
 const Index = () => {
-  const [{ data, fetching }] = useJobsQuery({
+  const { data, error, loading, fetchMore, variables } = useJobsQuery({
     variables: {
-      limit: 10,
+      limit: 2,
     },
+    notifyOnNetworkStatusChange: true,
   });
 
-  if (!fetching && !data) {
-    return <div>your query failed for some reason</div>;
+  if (!loading && !data) {
+    return (
+      <div>
+        <div>your query failed for some reason</div>
+        <div>{error?.message}</div>
+      </div>
+    );
   }
 
   return (
@@ -32,11 +36,11 @@ const Index = () => {
           <Link ml="auto">create job</Link>
         </NextLink>
       </Flex>
-      {!data && fetching ? (
+      {!data && loading ? (
         <div>loading...</div>
       ) : (
         <Stack spacing={8}>
-          {data!.jobs.map((j) => (
+          {data!.jobs.jobs.map((j) => (
             <Box key={j.id} p={5} shadow="md" borderWidth="1px">
               <Heading fontSize="xl">{j.title}</Heading>
               <Text mt={4}>{j.descriptionSnippet}</Text>
@@ -46,7 +50,21 @@ const Index = () => {
       )}
       {data ? (
         <Flex>
-          <Button colorScheme="teal" m="auto" my={8}>
+          <Button
+            onClick={() => {
+              console.log(data);
+              fetchMore({
+                variables: {
+                  limit: variables?.limit,
+                  cursor: data.jobs.jobs[data.jobs.jobs.length - 1].createdAt,
+                },
+              });
+            }}
+            isLoading={loading}
+            colorScheme="teal"
+            m="auto"
+            my={8}
+          >
             load more
           </Button>
         </Flex>
@@ -55,8 +73,4 @@ const Index = () => {
   );
 };
 
-// TODO: fix ssr
-export default withUrqlClient(
-  createUrqlClient
-  // { ssr: true }
-)(Index);
+export default Index;
