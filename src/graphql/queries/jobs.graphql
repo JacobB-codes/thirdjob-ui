@@ -1,10 +1,13 @@
 query Jobs($limit: Int, $cursor: String) {
   jobs(limit: $limit, cursor: $cursor) {
-    id
-    createdAt
-    updatedAt
-    title
-    descriptionSnippet
-    creatorId
+    hasMore
+    jobs {
+      id
+      creatorId
+      title
+      descriptionSnippet
+      createdAt
+      updatedAt
+    }
   }
 }
