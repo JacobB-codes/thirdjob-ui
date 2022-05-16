@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { withApollo } from "../utils/withApollo";
 
 const Index = () => {
   const { data, error, loading, fetchMore, variables } = useJobsQuery({
@@ -72,4 +73,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withApollo({ ssr: true })(Index);

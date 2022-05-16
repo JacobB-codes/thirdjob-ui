@@ -6,6 +6,7 @@ import InputField from "../components/InputField";
 import Layout from "../components/Layout";
 import { useCreateJobMutation } from "../generated/graphql";
 import { useIsAuth } from "../utils/useIsAuth";
+import { withApollo } from "../utils/withApollo";
 
 const CreateJob: React.FC<{}> = ({}) => {
   const router = useRouter();
@@ -19,6 +20,9 @@ const CreateJob: React.FC<{}> = ({}) => {
         onSubmit={async (values) => {
           const { errors } = await createJob({
             variables: { options: values },
+            update: (cache) => {
+              cache.evict({ fieldName: "jobs" });
+            },
           });
           if (!errors) {
             router.push("/");
@@ -51,4 +55,4 @@ const CreateJob: React.FC<{}> = ({}) => {
   );
 };
 
-export default CreateJob;
+export default withApollo({ ssr: false })(CreateJob);
