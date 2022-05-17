@@ -182,13 +182,20 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: number, username: string } | null } };
 
+export type JobQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type JobQuery = { __typename?: 'Query', job?: { __typename?: 'Job', id: number, title: string, description: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, email: string } } | null };
+
 export type JobsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   cursor?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type JobsQuery = { __typename?: 'Query', jobs: { __typename?: 'PaginatedJobs', hasMore: boolean, jobs: Array<{ __typename?: 'Job', id: number, creatorId: number, title: string, descriptionSnippet: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, email: string } }> } };
+export type JobsQuery = { __typename?: 'Query', jobs: { __typename?: 'PaginatedJobs', hasMore: boolean, jobs: Array<{ __typename?: 'Job', id: number, title: string, descriptionSnippet: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, email: string } }> } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -418,13 +425,56 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const JobDocument = gql`
+    query Job($id: Int!) {
+  job(id: $id) {
+    id
+    title
+    description
+    createdAt
+    updatedAt
+    creator {
+      id
+      username
+      email
+    }
+  }
+}
+    `;
+
+/**
+ * __useJobQuery__
+ *
+ * To run a query within a React component, call `useJobQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJobQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useJobQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useJobQuery(baseOptions: Apollo.QueryHookOptions<JobQuery, JobQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+      }
+export function useJobLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JobQuery, JobQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+        }
+export type JobQueryHookResult = ReturnType<typeof useJobQuery>;
+export type JobLazyQueryHookResult = ReturnType<typeof useJobLazyQuery>;
+export type JobQueryResult = Apollo.QueryResult<JobQuery, JobQueryVariables>;
 export const JobsDocument = gql`
     query Jobs($limit: Int, $cursor: String) {
   jobs(limit: $limit, cursor: $cursor) {
     hasMore
     jobs {
       id
-      creatorId
       title
       descriptionSnippet
       createdAt

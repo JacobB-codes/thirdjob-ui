@@ -3,7 +3,6 @@ query Jobs($limit: Int, $cursor: String) {
     hasMore
     jobs {
       id
-      creatorId
       title
       descriptionSnippet
       createdAt

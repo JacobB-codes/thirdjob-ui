@@ -43,7 +43,11 @@ const Index = () => {
         <Stack spacing={8}>
           {data!.jobs.jobs.map((j) => (
             <Box key={j.id} p={5} shadow="md" borderWidth="1px">
-              <Heading fontSize="xl">{j.title}</Heading>
+              <NextLink href="/job/[id]" as={`/job/${j.id}`}>
+                <Link>
+                  <Heading fontSize="xl">{j.title}</Heading>
+                </Link>
+              </NextLink>
               <Text fontSize="sm">
                 posted by {j.creator.username} at {j.createdAt}
               </Text>

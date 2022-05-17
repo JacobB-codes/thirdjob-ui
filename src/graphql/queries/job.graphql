@@ -1,0 +1,14 @@
+query Job($id: Int!) {
+  job(id: $id) {
+    id
+    title
+    description
+    createdAt
+    updatedAt
+    creator {
+      id
+      username
+      email
+    }
+  }
+}
