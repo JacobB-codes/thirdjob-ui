@@ -31,12 +31,6 @@ const Index = () => {
 
   return (
     <Layout>
-      <Flex align="center">
-        <Heading>Thirdjob</Heading>
-        <NextLink href="/create-job">
-          <Link ml="auto">create job</Link>
-        </NextLink>
-      </Flex>
       {!data && loading ? (
         <div>loading...</div>
       ) : (

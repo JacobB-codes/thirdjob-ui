@@ -7,13 +7,13 @@ import { withApollo } from "../../utils/withApollo";
 
 const Job: NextPage = () => {
   const router = useRouter();
-  const { data, loading, error } = useJobQuery({
+  const { data, loading } = useJobQuery({
     variables: {
       id: typeof router.query.id === "string" ? +router.query.id : -1,
     },
   });
 
-  if (error || !data?.job) {
+  if (!loading && !data) {
     return <div>Something went wrong with the query</div>;
   }
 

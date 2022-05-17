@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Link } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Link } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
 import { useLogoutMutation, useMeQuery } from "../generated/graphql";
@@ -33,15 +33,20 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
     //user is logged in
   } else {
     body = (
-      <Flex>
+      <Flex align="center">
+        <NextLink href="/create-job">
+          <Button as={Link} mr={4}>
+            create job
+          </Button>
+        </NextLink>
         <Box mr={2}>{data.me.username}</Box>
         <Button
-          variant="link"
           onClick={async () => {
             await logout();
             await apolloClient.resetStore();
           }}
           isLoading={logoutFetching}
+          variant="link"
         >
           logout
         </Button>
@@ -51,7 +56,14 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
 
   return (
     <Flex zIndex={1} position="sticky" top={0} bg="tan" p={4}>
-      <Box ml={"auto"}>{body}</Box>
+      <Flex flex={1} m="auto" align="center" maxW={800}>
+        <NextLink href="/">
+          <Link>
+            <Heading>thirdjob</Heading>
+          </Link>
+        </NextLink>
+        <Box ml={"auto"}>{body}</Box>
+      </Flex>
     </Flex>
   );
 };
