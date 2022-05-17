@@ -15,7 +15,7 @@ import { withApollo } from "../utils/withApollo";
 const Index = () => {
   const { data, error, loading, fetchMore, variables } = useJobsQuery({
     variables: {
-      limit: 2,
+      limit: 15,
     },
     notifyOnNetworkStatusChange: true,
   });
@@ -44,12 +44,15 @@ const Index = () => {
           {data!.jobs.jobs.map((j) => (
             <Box key={j.id} p={5} shadow="md" borderWidth="1px">
               <Heading fontSize="xl">{j.title}</Heading>
+              <Text fontSize="sm">
+                posted by {j.creator.username} at {j.createdAt}
+              </Text>
               <Text mt={4}>{j.descriptionSnippet}</Text>
             </Box>
           ))}
         </Stack>
       )}
-      {data ? (
+      {data && data.jobs.hasMore ? (
         <Flex>
           <Button
             onClick={() => {

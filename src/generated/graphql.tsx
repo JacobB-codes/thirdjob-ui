@@ -24,6 +24,7 @@ export type FieldError = {
 export type Job = {
   __typename?: 'Job';
   createdAt: Scalars['String'];
+  creator: User;
   creatorId: Scalars['Float'];
   description: Scalars['String'];
   descriptionSnippet: Scalars['String'];
@@ -187,7 +188,7 @@ export type JobsQueryVariables = Exact<{
 }>;
 
 
-export type JobsQuery = { __typename?: 'Query', jobs: { __typename?: 'PaginatedJobs', hasMore: boolean, jobs: Array<{ __typename?: 'Job', id: number, creatorId: number, title: string, descriptionSnippet: string, createdAt: string, updatedAt: string }> } };
+export type JobsQuery = { __typename?: 'Query', jobs: { __typename?: 'PaginatedJobs', hasMore: boolean, jobs: Array<{ __typename?: 'Job', id: number, creatorId: number, title: string, descriptionSnippet: string, createdAt: string, updatedAt: string, creator: { __typename?: 'User', id: number, username: string, email: string } }> } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -428,6 +429,11 @@ export const JobsDocument = gql`
       descriptionSnippet
       createdAt
       updatedAt
+      creator {
+        id
+        username
+        email
+      }
     }
   }
 }

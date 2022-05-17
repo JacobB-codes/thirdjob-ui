@@ -7,7 +7,7 @@ import { isServer } from "./isServer";
 const createApolloClient = (ctx?: NextPageContext) => {
   return new ApolloClient({
     uri: `${process.env.NEXT_PUBLIC_SERVER_URL}/graphql` as string,
-    credentials: "include",
+    credentials: "include" as const,
     headers: {
       cookie: (isServer() ? ctx?.req?.headers.cookie : undefined) || "",
     },
@@ -22,7 +22,7 @@ const createApolloClient = (ctx?: NextPageContext) => {
                 incoming: PaginatedJobs
               ): PaginatedJobs {
                 return {
-                  ...incoming,
+                  ...incoming, // take 'hasMore' field from the incoming page
                   jobs: [...(existing?.jobs || []), ...incoming.jobs],
                 };
               },
