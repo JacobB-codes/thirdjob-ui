@@ -43,7 +43,8 @@ const Index = () => {
                 </Link>
               </NextLink>
               <Text fontSize="sm">
-                posted by {j.creator.username} at {j.createdAt}
+                posted by <b>{j.creator.username}</b> on{" "}
+                <b>{new Date(+j.createdAt).toLocaleDateString()}</b>
               </Text>
               <Text mt={4}>{j.descriptionSnippet}</Text>
             </Box>

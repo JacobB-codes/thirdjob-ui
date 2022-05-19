@@ -24,7 +24,7 @@ const Job: NextPage = () => {
           <Heading>{data?.job?.title}</Heading>
           <Text>
             posted by <b>{data.job?.creator.username}</b> at{" "}
-            <b>{data.job?.createdAt}</b>
+            <b>{new Date(+data.job?.createdAt).toLocaleString()}</b>
           </Text>
           <Text>{data?.job?.description}</Text>
         </Stack>
