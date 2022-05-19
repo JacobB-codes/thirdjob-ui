@@ -35,7 +35,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
     body = (
       <Flex align="center">
         <NextLink href="/create-job">
-          <Button as={Link} mr={4}>
+          <Button
+            _hover={{
+              bgGradient: "linear(to-r, red.500, yellow.500)",
+            }}
+            as={Link}
+            mr={4}
+          >
             create job
           </Button>
         </NextLink>
@@ -55,7 +61,13 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   }
 
   return (
-    <Flex zIndex={1} position="sticky" top={0} bg="tan" p={4}>
+    <Flex
+      zIndex={1}
+      position="sticky"
+      top={0}
+      bgGradient="linear(to-r, pink.500, green.200)"
+      p={4}
+    >
       <Flex flex={1} m="auto" align="center" maxW={800}>
         <NextLink href="/">
           <Link>

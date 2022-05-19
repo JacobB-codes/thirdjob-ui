@@ -44,7 +44,9 @@ const CreateJob: React.FC<{}> = ({}) => {
               mt={4}
               isLoading={isSubmitting}
               type="submit"
-              colorScheme="teal"
+              _hover={{
+                bgGradient: "linear(to-br, red.500, yellow.500)",
+              }}
             >
               create job
             </Button>
